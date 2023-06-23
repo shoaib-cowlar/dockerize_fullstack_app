@@ -12,7 +12,7 @@ main().catch(err => console.log(err));
 
 async function main() {
     // host.docker.internal:8000 refers to local machine , and we have 8000 port mongodb in our local machine
-   await mongoose.connect('mongodb://host.docker.internal:8000/Shoiabdb');  
+   await mongoose.connect('mongodb://172.17.0.4:27017/Shoiabdb');  
 }
 
 mongoose.connection.on('connected',()=>{
