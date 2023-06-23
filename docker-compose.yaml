@@ -1,0 +1,48 @@
+version: '3.8'
+services:
+  # Database Service
+  mongodb:
+    image: mongo:6.0.5
+    volumes:
+      - mongodbdata:/data/db
+    networks:
+      - mern-net
+    container_name: mongodb
+  # Server Service  
+  server:
+    build: 
+      context: ./API-jokes
+      dockerfile: Dockerfile
+    volumes:
+      - ./API-jokes:/app
+      # If node_modules exists in the host directory, it will be mounted; otherwise, the anonymous volume will be used.
+      - /app/node_modules
+    ports:
+      - 5000:5000
+    depends_on:
+      - mongodb
+    networks:
+      - mern-net
+    container_name: server
+
+  # Server Service
+  client:
+    stdin_open: true
+    tty: true
+    build: 
+      context: ./jokes-client
+      dockerfile: Dockerfile
+    volumes:
+      - ./jokes-client/src:/app/src
+    ports:
+      - 3000:3000
+    depends_on:
+      - server
+    networks:
+      - mern-net
+    container_name: client
+
+volumes:
+  mongodbdata:
+networks:
+  mern-net:
