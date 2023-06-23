@@ -12,7 +12,7 @@ main().catch(err => console.log(err));
 
 async function main() {
     // mongodb is the name of container that's runnning mongodb
-   await mongoose.connect('mongodb://mongodb:27017/Shoiabdb');  
+   await mongoose.connect(`mongodb://${process.env.USERNAME}:${process.env.PASSWORD}@mongodb:27017/Shoiabdb?authSource=admin`);  
 }
 
 mongoose.connection.on('connected',()=>{

@@ -7,6 +7,8 @@ services:
       - mongodbdata:/data/db
     networks:
       - mern-net
+    env_file:
+      - ./env/mongo.env
     container_name: mongodb
   # Server Service  
   server:
@@ -23,6 +25,8 @@ services:
       - mongodb
     networks:
       - mern-net
+    env_file:
+      - ./API-jokes/server.env
     container_name: server
 
   # Server Service
